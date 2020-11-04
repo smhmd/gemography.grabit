@@ -3,14 +3,17 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
-  purge: ['./src/**/*.html', './src/**/*.jsx', './src/**/*.js'],
+  purge: ["./src/**/*.html", "./src/**/*.jsx", "./src/**/*.js"],
   theme: {
     extend: {
-      '72': '18rem',
-      '84': '21rem',
-      '96': '24rem',
+      colors: {
+        "brand-black": "#222a30",
+        "brand-gray": "#333c45",
+        "brand-blue": "#849FB1",
+        "brand-red": "#F71117",
+      },
     },
   },
   variants: {},
   plugins: [],
-}
+};
