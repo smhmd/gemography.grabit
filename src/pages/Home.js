@@ -80,7 +80,7 @@ function Home() {
         </nav>
       </section>
       <main className="flex flex-col items-center justify-between flex-grow max-w-screen-lg px-16 py-12 mx-auto space-y-12 md:space-y-16 md:py-20">
-        <h3 className="text-2xl font-semibold md:text-3xl">How it works</h3>
+        <h2 className="text-2xl font-semibold md:text-3xl">How it works</h2>
         <Feature
           title="We do more than delivery."
           description="Stocking your restaurant kitchen finding reliable sellers of cookware in The brick and mortar world"
@@ -101,7 +101,7 @@ function Home() {
         >
           <div className="flex flex-col items-center space-y-5">
             <h2 className="text-2xl font-semibold md:text-4xl lg:text-5xl">
-              Ready to order?
+              Receive our newsletter!
             </h2>
             <p className="max-w-xl px-3 text-sm text-center md:max-w-2xl md:text-lg lg:text-2xl">
               Browse local restaurants and businesses available in your area for
@@ -111,6 +111,7 @@ function Home() {
           <form className="flex w-full max-w-lg px-4 text-sm sm:text-base">
             <input
               type="text"
+              aria-label="email"
               className="flex-grow inline p-2 text-black placeholder-black placeholder-opacity-50 border-t-2 border-b-2 border-l-2 border-white rounded-l sm:px-4 sm:py-3 focus:outline-none focus:border-brand-gray"
               placeholder="Enter your email..."
             />
