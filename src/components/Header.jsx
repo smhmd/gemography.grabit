@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { firebase } from "../firebase";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { firebase } from '../firebase';
 
-import logoDark from "../assets/logo-dark.svg";
+import logoDark from '../assets/logo-dark.svg';
 
 function Header({ data }) {
   return (
@@ -16,7 +16,7 @@ function Header({ data }) {
           <img
             className="inline-block w-8 h-8 border border-gray-600 rounded-full"
             src={data.user.photoURL}
-            alt={data.user.displayName + "profile picture"}
+            alt={data.user.displayName + 'profile picture'}
           />
         </nav>
       </div>

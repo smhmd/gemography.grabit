@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { firebase, db } from "./firebase";
-import { BrowserRouter, Route } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { firebase, db } from './firebase';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-import Home from "./pages/Home";
-import Customer from "./pages/Customer";
-import Driver from "./pages/Driver";
+import Home from './pages/Home';
+import Customer from './pages/Customer';
+import Driver from './pages/Driver';
 
 function App() {
-  const { user, userType, setUserType } = useAuth(); // user is stateful
+  const { user, usertype, setUsertype } = useAuth(); // user is stateful
 
   const handleSignIn = async () => {
     const provider = new firebase.auth.FacebookAuthProvider(); // login with facebook
@@ -19,15 +19,15 @@ function App() {
       <Route exact path="/">
         {/* if not authneticated, go to landing page (Home comp) */}
         {user ? (
-          userType === "driver" ? (
+          usertype === 'drivers' ? (
             <Driver user={user} />
           ) : (
             <Customer user={user} />
           )
         ) : (
           <Home
-            userType={userType}
-            setUserType={setUserType}
+            usertype={usertype}
+            setUsertype={setUsertype}
             handleSignIn={handleSignIn}
           />
         )}
@@ -38,14 +38,14 @@ function App() {
 
 function useAuth() {
   const [user, setUser] = useState(false);
-  const [userType, setUserType] = useState(
-    window.localStorage.getItem("userType") || "driver"
+  const [usertype, setUsertype] = useState(
+    window.localStorage.getItem('usertype') || 'drivers',
   );
 
   useEffect(() => {
-    // sync userType with localStorage to get it on init
-    window.localStorage.setItem("userType", userType);
-  }, [userType]);
+    // sync usertype with localStorage to get it on init
+    window.localStorage.setItem('usertype', usertype);
+  }, [usertype]);
 
   useEffect(() => {
     // return for clean up. listener on authentication.
@@ -60,16 +60,16 @@ function useAuth() {
         // set current user to user object
         setUser(userObject);
         // set user in firestore
-        db.collection(userType + "s") // driver to drivers, customer to customers
+        db.collection(usertype)
           .doc(userObject.uid)
           .set(userObject, { merge: true });
       } else {
         setUser(null);
       }
     });
-  }, [userType]);
+  }, [usertype]);
 
-  return { user, userType, setUserType };
+  return { user, usertype, setUsertype };
 }
 
 export default App;

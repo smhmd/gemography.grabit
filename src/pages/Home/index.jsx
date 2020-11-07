@@ -1,26 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Hooks
-import useModal from "../../hooks/useModal";
+import useModal from '../../hooks/useModal';
 
 // Components
-import Button from "../../components/Button";
+import Button from '../../components/Button';
+import CustomersSVG from '../../components/svg/CustomersSVG';
+import DriversSVG from '../../components/svg/DriversSVG';
 
 //Layout
-import Login from "./Login";
-import SignInModal from "./SignInModal";
-import { FeatureImg, FeatureText } from "./Feature";
+import Login from './Login';
+import SignInModal from './SignInModal';
+import { FeatureImg, FeatureText } from './Feature';
 
 // Assets
-import landingBackground from "../../assets/landing.png";
-import logoWhite from "../../assets/logo-white.svg";
-import logoBackground from "../../assets/logo-background.svg";
-import buildingSVG from "../../assets/illustrations/building.svg";
-import driverSVG from "../../assets/illustrations/driver.svg";
-import houseSVG from "../../assets/illustrations/house.svg";
+import landingBackground from '../../assets/landing.png';
+import logoWhite from '../../assets/logo-white.svg';
+import logoBackground from '../../assets/logo-background.svg';
+import buildingSVG from '../../assets/illustrations/building.svg';
+import driverSVG from '../../assets/illustrations/driver.svg';
+import houseSVG from '../../assets/illustrations/house.svg';
 
-function Home({ handleSignIn, userType, setUserType }) {
+function Home({ handleSignIn, usertype, setUsertype }) {
   const [isOpen, toggle] = useModal();
 
   return (
@@ -29,7 +31,7 @@ function Home({ handleSignIn, userType, setUserType }) {
         className="flex flex-col items-center justify-between h-screen text-white bg-center bg-no-repeat bg-cover"
         style={{
           backgroundImage: `url("${landingBackground}")`,
-          maxHeight: "720px",
+          maxHeight: '720px',
         }}
       >
         <header className="flex items-center justify-between w-full max-w-screen-xl px-10 py-8 mx-auto md:px-16">
@@ -41,35 +43,16 @@ function Home({ handleSignIn, userType, setUserType }) {
           </nav>
         </header>
         <h1 className="px-3 text-2xl text-center md:text-4xl lg:text-5xl">
-          we <span className="italic font-semibold">deliver</span> it to your{" "}
-          <span className="italic font-semibold">door</span> within{" "}
+          we <span className="italic font-semibold">deliver</span> it to your{' '}
+          <span className="italic font-semibold">door</span> within{' '}
           <span className="italic font-semibold">one hour</span>
         </h1>
         <nav className="flex flex-wrap px-3 py-16 space-y-2 text-center lg:w-full lg:max-w-3xl md:space-y-0 md:space-x-10 md:flex-no-wrap">
           <Login title="Register as a driver">
-            <svg
-              className="hidden w-8 h-8 text-white fill-current md:block"
-              viewBox="0 0 35 36"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M34.63 21.32v-8.54C34.63 9.44 31.62-.94 18.4.07c-9.53.72-13.58 7.36-15.1 11a.27.27 0 00-.01.04.29.29 0 01-.01.04 2.41 2.41 0 01-.03.03.6.6 0 00-.1.14C3 11.65-.5 19.42.14 27.8c0 .11.04.21.08.3a.17.17 0 010 .04v.03c.34 2.6 1.44 4.91 2.37 6.47.71 1.2 2.46 1.63 3.73 1.1l26-10.94a4.08 4.08 0 002.3-3.48zm-16.91-7.63c-.9 2.58-2.88 6.68-6.85 9.46-3.42 2.4-6.32 2.92-8.24 2.9a3.38 3.38 0 00-.9.11A36.49 36.49 0 014.05 13.6c.26.17.57.28.92.31 2.05.18 5.04 0 7.57-1.95 1.59-1.22 2.8-1.64 3.69-1.68 1.38-.07 1.95 2.11 1.49 3.42zm7.96 5.87a2.26 2.26 0 104.51 0 2.26 2.26 0 00-4.51 0z"
-              />
-            </svg>
+            <DriversSVG className="hidden w-8 h-8 text-white fill-current md:block" />
           </Login>
           <Login title="Register as a customer">
-            <svg
-              className="hidden w-8 h-8 text-white fill-current md:block"
-              viewBox="0 0 25 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M12.06 15.4c3.5 0 6.34-3.44 6.34-7.7 0-4.25-.93-7.7-6.34-7.7S5.72 3.45 5.72 7.7c0 4.26 2.84 7.7 6.34 7.7z" />
-              <path d="M24.02 26.86c-.11-7.41-1.08-9.53-8.49-10.86 0 0-1.04 1.33-3.47 1.33S8.59 16 8.59 16C1.26 17.32.23 19.4.1 26.62c-.01.59-.02.62-.02.55v.78s1.77 3.55 11.98 3.55 11.98-3.56 11.98-3.56v-.57l-.02-.51z" />
-            </svg>
+            <CustomersSVG className="hidden w-8 h-8 text-white fill-current md:block" />
           </Login>
         </nav>
       </section>
@@ -144,8 +127,8 @@ function Home({ handleSignIn, userType, setUserType }) {
         isOpen={isOpen}
         toggle={toggle}
         handleSignIn={handleSignIn}
-        userType={userType}
-        setUserType={setUserType}
+        usertype={usertype}
+        setUsertype={setUsertype}
       />
     </div>
   );

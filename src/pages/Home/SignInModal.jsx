@@ -1,38 +1,42 @@
-import React from "react";
+import React from 'react';
 
-import Modal from "../../components/Modal";
-import Button from "../../components/Button";
+import Modal from '../../components/Modal';
+import Button from '../../components/Button';
 
-import driver from "../../assets/helmet.svg";
-import customer from "../../assets/user.svg";
+import CustomersSVG from '../../components/svg/CustomersSVG';
+import DriversSVG from '../../components/svg/DriversSVG';
 
-function Radio({ data: { user, userType, setUserType, avatar } }) {
+function Radio({ data: { user, usertype, setUsertype, SVG } }) {
   return (
     <label
-      htmlFor={"usertype-" + user}
+      htmlFor={'usertype-' + user}
       className="relative flex-grow cursor-pointer"
     >
       <input
         type="radio"
         key={user}
-        className="w-full p-16 bg-black bg-opacity-50 border-2 border-black border-opacity-25 rounded outline-none appearance-none cursor-pointer focus:border-blue-500 checked:border-blue-800 checked:bg-blue-600"
-        id={"usertype-" + user}
+        className="inset-0 w-full p-16 border-2 border-gray-400 rounded outline-none appearance-none cursor-pointer focus:border-green-400 checked:border-green-500 checked:bg-green-100"
+        id={'usertype-' + user}
         name="usertype"
         value={user}
         aria-label={user}
-        onChange={() => setUserType(user)}
-        checked={user === userType}
+        onChange={() => setUsertype(user)}
+        checked={user === usertype}
       />
-      <img
-        src={avatar}
-        alt=""
-        className="absolute inset-0 h-16 mt-4 ml-4 bg-contain"
+      <SVG
+        className={`absolute inset-0 h-16 mt-4 ml-4 text-gray-400 bg-contain fill-current ${
+          user === usertype && 'text-green-700'
+        }`}
       />
-      <span className="absolute bottom-0 left-0 flex items-center justify-between w-full p-3 text-lg font-semibold text-white capitalize">
+      <span
+        className={`absolute bottom-0 left-0 flex items-center justify-between w-full p-3 text-lg font-semibold text-gray-700 capitalize ${
+          user === usertype && 'text-green-900'
+        }`}
+      >
         {user}
-        {user === userType && (
+        {user === usertype && (
           <svg
-            className="w-5 h-5 text-white fill-current"
+            className="w-5 h-5 text-green-800 fill-current"
             viewBox="0 0 15 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +54,7 @@ function Radio({ data: { user, userType, setUserType, avatar } }) {
   );
 }
 
-function SignInModal({ isOpen, toggle, handleSignIn, userType, setUserType }) {
+function SignInModal({ isOpen, toggle, handleSignIn, usertype, setUsertype }) {
   return (
     <Modal isOpen={isOpen} toggle={toggle} title="Welcome back! 🎉">
       <h3 className="text-sm font-semibold">Sign in as:</h3>
@@ -58,33 +62,34 @@ function SignInModal({ isOpen, toggle, handleSignIn, userType, setUserType }) {
         <div className="flex space-x-4">
           <Radio
             data={{
-              user: "driver",
-              userType,
-              setUserType,
-              avatar: driver,
-              description: "me driver.",
+              user: 'drivers',
+              usertype,
+              setUsertype,
+              SVG: DriversSVG,
+              description: 'me driver.',
             }}
           />
           <Radio
             data={{
-              user: "customer",
-              userType,
-              setUserType,
-              avatar: customer,
-              description: "me customer.",
+              user: 'customers',
+              usertype,
+              setUsertype,
+              SVG: CustomersSVG,
+              description: 'me customer.',
             }}
           />
         </div>
         {/* <p className="text-xs">
-          {userType === "driver"
+          {usertype === "driver"
             ? "As a driver, you'll be able to fulfill requests."
             : "As a customer, you'll be able to request errands."}
         </p> */}
         <div className="pt-3 space-y-2">
           <Button
+            type="submit"
             onClick={(e) => {
               e.preventDefault();
-              handleSignIn(userType);
+              handleSignIn(usertype);
             }}
             colors="text-white bg-blue-600 w-full"
           >
@@ -95,7 +100,11 @@ function SignInModal({ isOpen, toggle, handleSignIn, userType, setUserType }) {
             />
             Continue with Facebook
           </Button>
-          <Button onClick={toggle} colors="text-brand-red bg-transparent">
+          <Button
+            type="button"
+            onClick={toggle}
+            colors="text-brand-red bg-transparent"
+          >
             Cancel
           </Button>
         </div>

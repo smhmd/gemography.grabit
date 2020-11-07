@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import Header from "../../components/Header";
-import CreatePost from "./CreatePost";
+import Header from '../../components/Header';
+import CreatePost from './CreatePost';
 
 function Customer({ user }) {
   return (

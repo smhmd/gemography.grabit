@@ -3,13 +3,13 @@
   Taken almost as is from this blog post https://medium.com/@lucasalgus/creating-a-custom-auto-resize-textarea-component-for-your-react-web-application-6959c0ad68bc
  */
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 
 const AutoTextArea = (props) => {
   const textAreaRef = useRef(null);
-  const [text, setText] = useState("");
-  const [textAreaHeight, setTextAreaHeight] = useState("auto");
-  const [parentHeight, setParentHeight] = useState("auto");
+  const [text, setText] = useState('');
+  const [textAreaHeight, setTextAreaHeight] = useState('auto');
+  const [parentHeight, setParentHeight] = useState('auto');
 
   useEffect(() => {
     setParentHeight(`${textAreaRef.current?.scrollHeight}px`);
@@ -17,7 +17,7 @@ const AutoTextArea = (props) => {
   }, [text]);
 
   const onChangeHandler = (event) => {
-    setTextAreaHeight("auto");
+    setTextAreaHeight('auto');
     setParentHeight(`${textAreaRef.current?.scrollHeight}px`);
     setText(event.target.value);
 

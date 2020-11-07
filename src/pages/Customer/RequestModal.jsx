@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState } from 'react';
 
-import Modal from "../../components/Modal";
-import Button from "../../components/Button";
+import Modal from '../../components/Modal';
+import Button from '../../components/Button';
 
-import AutoTextarea from "./AutoTextarea";
+import AutoTextarea from './AutoTextarea';
 
 function Label({ form, htmlFor, title, children }) {
   return (
@@ -16,17 +16,17 @@ function Label({ form, htmlFor, title, children }) {
 
 function RequestModal({ isOpen, toggle }) {
   const [post, setPost] = useState({
-    description: "",
-    date: "",
-    cost: "",
-    from: "",
-    to: "",
+    description: '',
+    date: '',
+    cost: '',
+    from: '',
+    to: '',
   });
 
   const itemRef = useRef();
 
   const [items, setItems] = useState([]);
-  const [currentItem, setCurrentItem] = useState("");
+  const [currentItem, setCurrentItem] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,9 +48,9 @@ function RequestModal({ isOpen, toggle }) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (currentItem !== "" && !items.includes(currentItem)) {
+          if (currentItem !== '' && !items.includes(currentItem)) {
             setItems([...items, currentItem]);
-            setCurrentItem("");
+            setCurrentItem('');
           }
           itemRef.current.focus();
         }}
@@ -104,7 +104,7 @@ function RequestModal({ isOpen, toggle }) {
       </Label>
       <ul
         className="overflow-y-scroll text-sm divide-y divide-gray-300"
-        style={{ maxHeight: "150px" }}
+        style={{ maxHeight: '150px' }}
       >
         {items.map((item, index) => (
           <li className="flex items-center px-4 py-2 space-x-3" key={index}>
