@@ -1,16 +1,16 @@
 import React from 'react';
 
 import Header from '../../components/Header';
-import CreatePost from './CreatePost';
+import Posts from './Posts';
 
 function Customer({ user }) {
   return (
-    <div className="h-full">
-      <Header data={{ user }} />
-      <div className="grid-cols-4 grid-rows-1 md:grid">
-        <div className="hidden border-r border-gray-500 sm:block"></div>
-        <CreatePost user={user} className="col-span-2 px-8 py-4 md:px-16" />
-        <div className="hidden border-l border-gray-500 sm:block"></div>
+    <div className="flex flex-col h-screen">
+      <Header user={user} />
+      <div className="flex flex-1">
+        <div className="w-56 border-r-2 border-gray-400 "></div>
+        <Posts user={user} />
+        <div className="w-64 border-l-2 border-gray-400"></div>
       </div>
     </div>
   );
