@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Hooks
@@ -23,8 +23,12 @@ import driverSVG from '../../assets/illustrations/driver.svg';
 import houseSVG from '../../assets/illustrations/house.svg';
 
 function Home({ handleSignIn, usertype, setUsertype }) {
-  const [isOpen, toggle] = useModal();
-
+  const [isSignInModalOpen, toggleSignInModal] = useModal();
+  const [authMode, setAuthMode] = useState('login'); // mode is used to use the same modal for login and sign up and conditionally show markup.
+  const authenticate = (mode) => {
+    setAuthMode(mode); // sets mode
+    toggleSignInModal();
+  };
   return (
     <div className="flex flex-col min-h-screen">
       <section
@@ -39,7 +43,27 @@ function Home({ handleSignIn, usertype, setUsertype }) {
             <img src={logoWhite} alt="logo" className="w-32" />
           </Link>
           <nav>
-            <Button onClick={toggle}>Sign in</Button>
+            <Button
+              size="w-full px-6 py-2 md:px-6 md:py-3"
+              onClick={() => {
+                authenticate('login');
+              }}
+            >
+              <svg
+                className="hidden mr-3 sm:inline"
+                viewBox="0 0 15 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+              >
+                <path
+                  d="M10.5 7.5l-3 3.25m3-3.25l-3-3m3 3H1m6-6h6.5v12H7"
+                  stroke="currentColor"
+                ></path>
+              </svg>
+              Sign in
+            </Button>
           </nav>
         </header>
         <h1 className="px-3 text-2xl text-center md:text-4xl lg:text-5xl">
@@ -48,10 +72,18 @@ function Home({ handleSignIn, usertype, setUsertype }) {
           <span className="italic font-semibold">one hour</span>
         </h1>
         <nav className="flex flex-wrap px-3 py-16 space-y-2 text-center lg:w-full lg:max-w-3xl md:space-y-0 md:space-x-10 md:flex-no-wrap">
-          <Login title="Register as a driver">
+          <Login
+            setUserType={setUsertype}
+            authenticate={authenticate}
+            type="drivers"
+          >
             <DriversSVG className="hidden w-8 h-8 text-white fill-current md:block" />
           </Login>
-          <Login title="Register as a customer">
+          <Login
+            setUserType={setUsertype}
+            authenticate={authenticate}
+            type="customers"
+          >
             <CustomersSVG className="hidden w-8 h-8 text-white fill-current md:block" />
           </Login>
         </nav>
@@ -124,11 +156,12 @@ function Home({ handleSignIn, usertype, setUsertype }) {
       </footer>
 
       <SignInModal
-        isOpen={isOpen}
-        toggle={toggle}
+        isSignInModalOpen={isSignInModalOpen}
+        toggleSignInModal={toggleSignInModal}
         handleSignIn={handleSignIn}
         usertype={usertype}
         setUsertype={setUsertype}
+        authMode={authMode}
       />
     </div>
   );

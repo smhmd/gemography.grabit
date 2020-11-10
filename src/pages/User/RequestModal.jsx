@@ -3,42 +3,17 @@ import { db } from '../../firebase';
 
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
+import { Label, Input } from '../../components/LabelInput';
 
 import AutoTextarea from './AutoTextarea';
 
-function Label({ form, htmlFor, title, children }) {
-  return (
-    <label className="flex-grow py-2 space-y-1" form={form} htmlFor={htmlFor}>
-      <span className="block text-sm font-semibold text-gray-800">{title}</span>
-      {children}
-    </label>
-  );
-}
-
-function Input({ value, title, placeholder, id, children, handleInputChange }) {
-  return (
-    <Label form="postForm" htmlFor={id} title={title}>
-      <div className="relative flex items-center">
-        {children}
-        <input
-          value={value}
-          form="postForm"
-          onChange={handleInputChange}
-          id={id}
-          name={id}
-          required
-          className="w-full py-2 pl-10 pr-3 border border-gray-500 rounded-sm outline-none focus:border-brand-red"
-          placeholder={placeholder}
-          type="text"
-        />
-      </div>
-    </Label>
-  );
-}
-
-function RequestModal({ isOpen, toggle }) {
+export default function RequestModal({
+  isRequestModalOpen,
+  toggleRequestModal,
+  user,
+}) {
   const [partialData, setPartialData] = useState({
-    description: '',
+    summary: '',
     date: '',
     cost: '',
     from: '',
@@ -57,7 +32,7 @@ function RequestModal({ isOpen, toggle }) {
 
   const clean = () => {
     setPartialData({
-      description: '',
+      summary: '',
       date: '',
       cost: '',
       from: '',
@@ -69,25 +44,29 @@ function RequestModal({ isOpen, toggle }) {
 
   return (
     <Modal
-      isOpen={isOpen}
-      toggle={toggle}
+      isModalOpen={isRequestModalOpen}
+      toggleModal={toggleRequestModal}
       title="Request"
       size="py-4 px-6 space-y-0 sm:px-12 sm:py-4"
     >
       {/* there are two forms. one for the entire post, one for the items added.
           Nested forms are forbidden in HTML.
-          Each input, labe, and button declare which form they belong to using the form attribute.
+          Each input, label, and button declare which form they belong to using the form attribute.
         */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
           db.collection('posts').add({
             ...partialData,
+            author: db.collection('customers').doc(user.uid),
             orders,
             orderedAt: new Date(),
+            status: 'new',
+            pickedAt: null,
+            courier: null,
           });
           clean();
-          toggle();
+          toggleRequestModal();
         }}
         id="postForm"
       ></form>
@@ -103,15 +82,15 @@ function RequestModal({ isOpen, toggle }) {
         id="itemsForm"
       ></form>
 
-      <Label form="postForm" htmlFor="description" title="Describe your order">
+      <Label form="postForm" htmlFor="summary" title="Give us a summary">
         <AutoTextarea
           required
           className="w-full p-3 border border-gray-500 rounded-sm outline-none focus:border-brand-red"
           onChange={partialDataHandler}
-          value={partialData.description}
+          value={partialData.summary}
           form="postForm"
-          name="description"
-          id="description"
+          name="summary"
+          id="summary"
           placeholder="What would I like?"
         />
       </Label>
@@ -185,6 +164,8 @@ function RequestModal({ isOpen, toggle }) {
 
       <div className="flex w-full space-x-3">
         <Input
+          required={true}
+          form="postForm"
           value={partialData.date}
           id="date"
           title="Time"
@@ -209,7 +190,9 @@ function RequestModal({ isOpen, toggle }) {
         </Input>
 
         <Input
+          form="postForm"
           value={partialData.cost}
+          required={true}
           id="cost"
           title="Order cost"
           placeholder="20"
@@ -234,6 +217,8 @@ function RequestModal({ isOpen, toggle }) {
 
       <div className="flex w-full space-x-3">
         <Input
+          form="postForm"
+          required={true}
           value={partialData.from}
           id="from"
           title="From"
@@ -263,7 +248,9 @@ function RequestModal({ isOpen, toggle }) {
         </Input>
 
         <Input
+          form="postForm"
           value={partialData.to}
+          required={true}
           id="to"
           title="To"
           placeholder="My house at..."
@@ -291,12 +278,13 @@ function RequestModal({ isOpen, toggle }) {
         <Button form="postForm" type="submit">
           Post request
         </Button>
-        <Button onClick={toggle} colors="text-brand-red bg-transparent">
+        <Button
+          onClick={toggleRequestModal}
+          colors="text-brand-red bg-transparent"
+        >
           Cancel
         </Button>
       </div>
     </Modal>
   );
 }
-
-export default RequestModal;

@@ -7,6 +7,7 @@ import CustomersSVG from '../../components/svg/CustomersSVG';
 import DriversSVG from '../../components/svg/DriversSVG';
 
 function Radio({ data: { user, usertype, setUsertype, SVG } }) {
+  const isUsertype = user === usertype;
   return (
     <label
       htmlFor={'usertype-' + user}
@@ -21,20 +22,20 @@ function Radio({ data: { user, usertype, setUsertype, SVG } }) {
         value={user}
         aria-label={user}
         onChange={() => setUsertype(user)}
-        checked={user === usertype}
+        checked={isUsertype}
       />
       <SVG
         className={`absolute inset-0 h-16 mt-4 ml-4 text-gray-400 bg-contain fill-current ${
-          user === usertype && 'text-green-700'
+          isUsertype && 'text-green-700'
         }`}
       />
       <span
         className={`absolute bottom-0 left-0 flex items-center justify-between w-full p-3 text-lg font-semibold text-gray-700 capitalize ${
-          user === usertype && 'text-green-900'
+          isUsertype && 'text-green-900'
         }`}
       >
         {user}
-        {user === usertype && (
+        {isUsertype && (
           <svg
             className="w-5 h-5 text-green-800 fill-current"
             viewBox="0 0 15 15"
@@ -54,36 +55,47 @@ function Radio({ data: { user, usertype, setUsertype, SVG } }) {
   );
 }
 
-function SignInModal({ isOpen, toggle, handleSignIn, usertype, setUsertype }) {
+function SignInModal({
+  isSignInModalOpen,
+  toggleSignInModal,
+  handleSignIn,
+  usertype,
+  setUsertype,
+  authMode,
+}) {
+  const isLoggingIn = authMode === 'login';
   return (
-    <Modal isOpen={isOpen} toggle={toggle} title="Welcome back! 🎉">
-      <h3 className="text-sm font-semibold">Sign in as:</h3>
+    <Modal
+      isModalOpen={isSignInModalOpen}
+      toggleModal={toggleSignInModal}
+      title={isLoggingIn ? 'Welcome back! 🎉' : 'Hello there! 👋'}
+    >
+      <h3 className="text-sm font-semibold">
+        {isLoggingIn ? 'Sign in as:' : 'Sign up:'}
+      </h3>
       <form className="space-y-1">
-        <div className="flex space-x-4">
-          <Radio
-            data={{
-              user: 'drivers',
-              usertype,
-              setUsertype,
-              SVG: DriversSVG,
-              description: 'me driver.',
-            }}
-          />
-          <Radio
-            data={{
-              user: 'customers',
-              usertype,
-              setUsertype,
-              SVG: CustomersSVG,
-              description: 'me customer.',
-            }}
-          />
-        </div>
-        {/* <p className="text-xs">
-          {usertype === "driver"
-            ? "As a driver, you'll be able to fulfill requests."
-            : "As a customer, you'll be able to request errands."}
-        </p> */}
+        {isLoggingIn ? (
+          <div className="flex space-x-4">
+            <Radio
+              data={{
+                user: 'drivers',
+                usertype,
+                setUsertype,
+                SVG: DriversSVG,
+                description: 'me driver.',
+              }}
+            />
+            <Radio
+              data={{
+                user: 'customers',
+                usertype,
+                setUsertype,
+                SVG: CustomersSVG,
+                description: 'me customer.',
+              }}
+            />
+          </div>
+        ) : null}
         <div className="pt-3 space-y-2">
           <Button
             type="submit"
@@ -102,7 +114,7 @@ function SignInModal({ isOpen, toggle, handleSignIn, usertype, setUsertype }) {
           </Button>
           <Button
             type="button"
-            onClick={toggle}
+            onClick={toggleSignInModal}
             colors="text-brand-red bg-transparent"
           >
             Cancel

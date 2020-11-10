@@ -1,0 +1,26 @@
+.User::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.User::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+.User::-webkit-scrollbar-thumb {
+  @apply bg-brand-gray;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.User::-webkit-scrollbar-thumb:hover {
+  @apply bg-brand-black;
+}
+
+.User::-webkit-scrollbar-track {
+  @apply bg-gray-400;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+
+.User::-webkit-scrollbar-corner {
+  background: transparent;
+}
